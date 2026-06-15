@@ -3,761 +3,312 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>珍北平豬肉餡餅｜NFC Digital Card</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<title>珍北平豬肉餡餅｜陳韋甫 數位名片</title>
+<meta name="theme-color" content="#F4ECDB">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
 <style>
-:root {
-  --bg:          oklch(12% 0.025 55);
-  --surface:     oklch(18% 0.03 55);
-  --card:        oklch(21% 0.035 55);
-  --card-hover:  oklch(27% 0.04 55);
-  --border:      oklch(30% 0.04 55);
-  --border-gold: oklch(60% 0.10 78);
-  --gold:        oklch(78% 0.13 78);
-  --gold-bright: oklch(90% 0.10 88);
-  --text:        oklch(94% 0.015 80);
-  --text-muted:  oklch(58% 0.018 65);
-  --accent:      oklch(65% 0.16 50);
-
-  --space-xs:  4px;
-  --space-sm:  8px;
-  --space-md:  16px;
-  --space-lg:  24px;
-  --space-xl:  32px;
-  --space-2xl: 48px;
+:root{
+  --paper:#F4ECDB; --paper-hi:#FBF7EE; --kraft:#E8DCC4; --kraft-deep:#D8C8A8;
+  --ink:#2E2017; --ink-soft:#5C4A3A; --ink-faint:#9A856E;
+  --red:#D7261D; --red-deep:#A81810; --gold:#C77B1E; --gold-deep:#A35F12;
+  --line:#DDCDB0; --green:#06C755;
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Noto Sans TC', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--paper);color:var(--ink);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
   background:
-    radial-gradient(ellipse 100% 45% at 50% 0%,   oklch(22% 0.05 60 / 0.55), transparent),
-    radial-gradient(ellipse 60%  30% at 80% 100%, oklch(15% 0.04 45 / 0.35), transparent);
-  z-index: 0;
-  pointer-events: none;
-}
+    repeating-linear-gradient(122deg,rgba(107,68,35,.022) 0 1px,transparent 1px 3px),
+    radial-gradient(circle at 28% 10%,rgba(216,200,168,.5),transparent 55%),
+    radial-gradient(circle at 82% 90%,rgba(216,200,168,.4),transparent 55%);}
+.wrap{position:relative;z-index:1;max-width:460px;margin:0 auto;}
 
-/* Hidden legacy elements */
-.hermes-bg, .hermes-texture, .marquee-bg { display: none; }
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.rv.in{opacity:1;transform:none;}
+.dl1{transition-delay:.08s}.dl2{transition-delay:.16s}.dl3{transition-delay:.24s}
 
-/* Gold ember canvas */
-#fireCanvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
+/* ============ 第一螢：名片 ============ */
+.card{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px 24px 26px;}
+.kicker{display:flex;align-items:center;gap:9px;font-size:.66rem;letter-spacing:.4em;color:var(--ink-faint);
+  text-transform:uppercase;margin-bottom:22px;opacity:0;animation:up .8s ease .1s forwards;}
+.kicker::before,.kicker::after{content:'';width:18px;height:1px;background:var(--kraft-deep);}
+.kicker .seal{width:21px;height:21px;border:1.5px solid var(--red);border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;font-family:'Noto Serif TC',serif;
+  font-size:11px;line-height:1;letter-spacing:normal;text-indent:0;color:var(--red);font-weight:700;}
 
-/* Main content */
-.main-content {
-  position: relative;
-  z-index: 10;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: var(--space-lg) var(--space-md) var(--space-2xl);
-}
+.portrait{width:100%;max-width:360px;aspect-ratio:1/1;border-radius:26px;overflow:hidden;margin-bottom:24px;
+  border:5px solid var(--paper-hi);box-shadow:0 0 0 1px var(--kraft-deep),0 22px 50px rgba(46,32,23,.24);
+  opacity:0;animation:up .85s ease .2s forwards;}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:center 28%;}
 
-/* === HERO === */
-.hero {
-  text-align: center;
-  padding: var(--space-2xl) 0 var(--space-xl);
-}
+.name{font-family:'Noto Serif TC',serif;font-weight:900;font-size:clamp(2.5rem,9.5vw,3.1rem);
+  color:var(--ink);letter-spacing:.1em;line-height:1;opacity:0;animation:up .8s ease .32s forwards;}
+.alias{font-family:'Noto Serif TC',serif;font-size:.92rem;color:var(--gold-deep);letter-spacing:.34em;
+  margin-top:12px;opacity:0;animation:up .8s ease .4s forwards;}
+.role{font-size:.9rem;color:var(--ink-soft);letter-spacing:.04em;margin-top:14px;line-height:1.7;
+  opacity:0;animation:up .8s ease .48s forwards;}
+.role b{color:var(--red);font-weight:700;}
 
-.avatar-ring {
-  width: 160px;
-  height: 200px;
-  border-radius: 20px;
-  margin: 0 auto var(--space-lg);
-  padding: 3px;
-  background: linear-gradient(145deg, var(--gold), var(--gold-bright), var(--gold));
-  box-shadow:
-    0 0 40px oklch(78% 0.13 78 / 0.22),
-    0 0 80px oklch(78% 0.13 78 / 0.07);
-  animation: ring-breathe 4s ease-in-out infinite;
-}
+.rule{display:flex;align-items:center;gap:14px;width:200px;margin:20px 0 4px;
+  opacity:0;animation:up .8s ease .56s forwards;}
+.rule i{flex:1;height:1px;background:var(--line);}
+.rule .pie{width:46px;height:46px;flex-shrink:0;}
 
-@keyframes ring-breathe {
-  0%, 100% { box-shadow: 0 0 30px oklch(78% 0.13 78 / 0.18), 0 0 60px oklch(78% 0.13 78 / 0.05); }
-  50%       { box-shadow: 0 0 55px oklch(78% 0.13 78 / 0.32), 0 0 100px oklch(78% 0.13 78 / 0.10); }
-}
+.actions{width:100%;max-width:340px;display:flex;flex-direction:column;gap:11px;margin-top:20px;
+  opacity:0;animation:up .8s ease .66s forwards;}
+.act{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:16px;
+  text-decoration:none;font-size:1rem;font-weight:700;letter-spacing:.04em;
+  transition:transform .18s ease,box-shadow .25s ease,filter .2s;}
+.act:active{transform:scale(.98);}
+.act svg{width:22px;height:22px;}
+.act.line{background:var(--green);color:#fff;box-shadow:0 10px 24px rgba(6,199,85,.32);}
+.act.line:hover{filter:brightness(1.05);box-shadow:0 14px 30px rgba(6,199,85,.4);}
+.act-row{display:flex;gap:11px;}
+.act-row .act{flex:1;font-size:.95rem;}
+.act.call{background:var(--red);color:#fff;box-shadow:0 10px 24px rgba(168,24,16,.3);}
+.act.call:hover{filter:brightness(1.06);box-shadow:0 14px 30px rgba(168,24,16,.4);}
+.act.map{background:var(--paper-hi);color:var(--ink);border:1.5px solid var(--kraft-deep);}
+.act.map:hover{border-color:var(--gold);background:#fff;}
 
-.avatar-ring img {
-  width: 100%;
-  height: 100%;
-  border-radius: 17px;
-  object-fit: cover;
-}
+.more{margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:7px;
+  opacity:0;animation:up .8s ease .9s forwards;}
+.more span{font-size:.62rem;letter-spacing:.28em;color:var(--ink-faint);}
+.more .arr{width:1px;height:30px;background:linear-gradient(var(--gold),transparent);
+  animation:drop 1.9s ease-in-out infinite;}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top;opacity:1}100%{transform:scaleY(1);transform-origin:bottom;opacity:0}}
 
-.brand-name {
-  font-family: 'Noto Serif TC', serif;
-  font-weight: 900;
-  font-size: clamp(1.6rem, 5vw, 2rem);
-  color: var(--gold);
-  letter-spacing: 0.12em;
-  margin-bottom: var(--space-xs);
-}
+/* ============ 大數字 ============ */
+.numblock{background:var(--red);color:var(--paper-hi);padding:60px 30px;text-align:center;position:relative;overflow:hidden;}
+.numblock::after{content:'珍';position:absolute;right:-28px;bottom:-54px;font-family:'Noto Serif TC',serif;
+  font-size:17rem;font-weight:900;color:rgba(255,255,255,.06);line-height:1;}
+.numblock .row{display:flex;justify-content:center;align-items:flex-end;gap:44px;position:relative;z-index:1;}
+.numblock .stat{display:flex;flex-direction:column;align-items:center;}
+.numblock .big{font-family:'Noto Serif TC',serif;font-weight:900;font-size:4rem;line-height:.9;}
+.numblock .lb{font-size:.74rem;letter-spacing:.16em;margin-top:8px;opacity:.9;}
+.numblock .award{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;margin-top:26px;
+  padding:.5rem 1.1rem;border:1px solid rgba(255,255,255,.45);border-radius:50px;
+  font-size:.82rem;letter-spacing:.06em;font-weight:500;}
+.numblock .award svg{width:17px;height:17px;}
+.numblock .cap{font-size:.82rem;letter-spacing:.18em;margin-top:16px;opacity:.85;position:relative;z-index:1;}
 
-.subtitle-brand {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: 0.08em;
-  margin: var(--space-xs) 0;
-}
+/* ============ 全幅特寫 ============ */
+.feature{position:relative;height:60vh;min-height:360px;overflow:hidden;}
+.feature img{width:100%;height:100%;object-fit:cover;display:block;}
+.feature .grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,18,10,.85) 0%,rgba(28,18,10,.15) 46%,transparent 70%);}
+.feature .txt{position:absolute;left:28px;right:28px;bottom:30px;color:var(--paper-hi);}
+.feature .et{font-size:.66rem;letter-spacing:.32em;color:#F2C260;text-transform:uppercase;margin-bottom:10px;}
+.feature .ti{font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.9rem;letter-spacing:.04em;line-height:1.3;}
+.feature .sb{font-size:.86rem;margin-top:8px;opacity:.85;}
 
-.subtitle {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  margin: var(--space-xs) 0;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-}
+/* ============ 區段 ============ */
+.sect{padding:50px 24px 6px;}
+.sect-h{font-family:'Noto Serif TC',serif;font-weight:700;letter-spacing:.06em;color:var(--ink);margin-bottom:4px;
+  display:flex;align-items:baseline;gap:10px;}
+.sect-h .zh{font-size:1.4rem;}
+.sect-h .en{font-size:.62rem;letter-spacing:.3em;color:var(--gold-deep);text-transform:uppercase;}
+.sect-sub{font-size:.8rem;color:var(--ink-faint);letter-spacing:.04em;margin-bottom:22px;}
 
-.badge {
-  display: inline-block;
-  margin-top: var(--space-sm);
-  padding: 0.28rem 1rem;
-  background: oklch(65% 0.16 50 / 0.12);
-  border: 1px solid oklch(65% 0.16 50 / 0.32);
-  border-radius: 50px;
-  font-size: 0.78rem;
-  color: var(--accent);
-  letter-spacing: 0.1em;
-  font-weight: 500;
-}
+/* 菜單 grid */
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.mi{background:var(--paper-hi);border:1px solid var(--kraft-deep);border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow-sm,0 2px 8px rgba(46,32,23,.08));}
+.mi img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
+.mi .lb{padding:11px 8px;font-size:.86rem;font-weight:500;text-align:center;color:var(--ink);}
+.mi.feat{grid-column:1/-1;}
+.mi.feat img{aspect-ratio:16/9;}
+.mi.feat .lb{font-family:'Noto Serif TC',serif;font-weight:700;font-size:1rem;padding:13px 8px;}
 
-/* === SECTION TITLES — no border-left === */
-.section-title {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--gold);
-  margin: var(--space-2xl) 0 var(--space-md);
-  letter-spacing: 0.3em;
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-}
+/* 媒體 */
+.media{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--line);
+  text-decoration:none;color:var(--ink);}
+.media:last-child{border-bottom:none;}
+.media .ix{font-family:'Noto Serif TC',serif;font-weight:700;color:var(--gold-deep);font-size:1.05rem;flex-shrink:0;width:24px;}
+.media .info{flex:1;min-width:0;}
+.media .t{font-size:.88rem;font-weight:500;line-height:1.5;}
+.media .s{font-size:.72rem;color:var(--ink-faint);margin-top:3px;}
+.media .arr{color:var(--gold);flex-shrink:0;display:flex;}.media .arr svg{width:18px;height:18px;}
 
-.section-title::before {
-  content: '◆';
-  font-size: 0.5em;
-  opacity: 0.75;
-  flex-shrink: 0;
-}
+/* 影音 */
+.yt{margin-bottom:11px;border-radius:16px;overflow:hidden;border:1px solid var(--kraft-deep);background:#000;}
+.yt iframe{width:100%;aspect-ratio:16/9;border:none;display:block;}
 
-.section-title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
+/* 分店 */
+.stores{display:flex;flex-direction:column;gap:8px;}
+.store{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-radius:14px;
+  background:var(--paper-hi);border:1px solid var(--kraft-deep);}
+.store .l{display:flex;align-items:center;gap:13px;}
+.store .n{width:28px;height:28px;border-radius:8px;background:var(--red);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;flex-shrink:0;
+  font-family:'Noto Serif TC',serif;}
+.store .nm{font-size:.92rem;font-weight:500;}
+.nav{display:inline-flex;align-items:center;gap:5px;padding:.46rem .9rem;min-height:34px;background:transparent;
+  border:1.5px solid var(--kraft-deep);border-radius:50px;color:var(--gold-deep);text-decoration:none;
+  font-size:.8rem;font-weight:500;transition:.2s;white-space:nowrap;}
+.nav:hover{background:#fff;border-color:var(--gold);}
+.nav svg{width:14px;height:14px;}
 
-/* === SOCIAL BUTTONS === */
-.social-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-sm);
-}
+/* 頁尾 */
+.foot{text-align:center;padding:46px 24px 40px;margin-top:30px;border-top:1px solid var(--line);}
+.socials{display:flex;justify-content:center;gap:12px;margin-bottom:24px;}
+.soc{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--kraft-deep);background:var(--paper-hi);
+  display:flex;align-items:center;justify-content:center;color:var(--ink-soft);text-decoration:none;transition:.2s;}
+.soc:hover{border-color:var(--gold);color:var(--gold-deep);background:#fff;}
+.soc svg{width:20px;height:20px;}
+.foot .seal{font-family:'Noto Serif TC',serif;font-weight:900;color:var(--red);font-size:1.1rem;
+  width:42px;height:42px;border:2px solid var(--red);border-radius:50%;display:flex;align-items:center;
+  justify-content:center;margin:0 auto 14px;}
+.foot .lab{font-family:'Noto Serif TC',serif;font-size:.72rem;color:var(--ink-soft);letter-spacing:.26em;}
+.foot .sub{font-size:.62rem;color:var(--ink-faint);margin-top:6px;letter-spacing:.06em;}
 
-.social-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-md);
-  min-height: 52px;
-  border-radius: 12px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 500;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-
-.social-btn:hover {
-  background: var(--card-hover);
-  border-color: var(--border-gold);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px oklch(0% 0 0 / 0.35);
-}
-
-.social-btn.full-width { grid-column: 1 / -1; }
-.social-btn .icon { font-size: 1.1rem; }
-
-.social-btn.line {
-  background: oklch(42% 0.15 150 / 0.22);
-  border-color: oklch(55% 0.18 150 / 0.38);
-  color: oklch(80% 0.14 150);
-}
-.social-btn.line:hover {
-  background: oklch(42% 0.15 150 / 0.35);
-  border-color: oklch(62% 0.18 150 / 0.6);
-}
-
-.social-btn.phone {
-  background: oklch(65% 0.16 50 / 0.12);
-  border-color: oklch(65% 0.16 50 / 0.28);
-  color: var(--accent);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-.social-btn.phone:hover {
-  background: oklch(65% 0.16 50 / 0.22);
-  border-color: var(--accent);
-}
-
-/* === YOUTUBE === */
-.yt-card {
-  margin-bottom: var(--space-sm);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--card);
-  border: 1px solid var(--border);
-}
-.yt-card iframe {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border: none;
-  display: block;
-}
-.yt-card .yt-info { padding: var(--space-sm) var(--space-md); }
-.yt-card .yt-title { font-size: 0.82rem; font-weight: 500; color: var(--text-muted); }
-
-/* === MEDIA CARDS === */
-.media-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md);
-  margin-bottom: var(--space-sm);
-  border-radius: 12px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  text-decoration: none;
-  color: var(--text);
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
-}
-.media-card:hover {
-  background: var(--card-hover);
-  border-color: var(--border-gold);
-  transform: translateY(-2px);
-}
-
-.media-icon { font-size: 1.6rem; flex-shrink: 0; }
-.media-info { flex: 1; min-width: 0; }
-.media-info .media-title {
-  font-size: 0.85rem;
-  font-weight: 500;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.media-info .media-source {
-  font-size: 0.73rem;
-  color: var(--text-muted);
-  margin-top: 0.2rem;
-}
-.media-arrow { color: var(--border-gold); font-size: 1.2rem; flex-shrink: 0; }
-
-/* === MENU CAROUSEL === */
-.menu-carousel {
-  display: flex;
-  gap: var(--space-sm);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding: var(--space-xs) 0 var(--space-md);
-  scrollbar-width: none;
-}
-.menu-carousel::-webkit-scrollbar { display: none; }
-
-.menu-item {
-  flex: 0 0 82%;
-  scroll-snap-align: center;
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--card);
-  border: 1px solid var(--border);
-}
-.menu-item img {
-  width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-  display: block;
-}
-.menu-item .menu-label {
-  padding: var(--space-sm) var(--space-md);
-  font-size: 0.88rem;
-  font-weight: 500;
-  text-align: center;
-  color: var(--text);
-}
-
-/* === STORE LIST === */
-.store-list { display: flex; flex-direction: column; gap: var(--space-sm); }
-
-.store-list-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-md);
-  border-radius: 12px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  transition: border-color 0.2s;
-}
-.store-list-item:hover { border-color: var(--border-gold); }
-
-.store-list-left { display: flex; align-items: center; gap: var(--space-sm); }
-
-.store-num {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: transparent;
-  border: 1px solid var(--border-gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--gold);
-  flex-shrink: 0;
-  font-family: 'Noto Serif TC', serif;
-}
-
-.store-list-name {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text);
-}
-
-.store-nav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  padding: 0.5rem 1rem;
-  min-height: 36px;
-  background: transparent;
-  border: 1px solid var(--border-gold);
-  border-radius: 50px;
-  color: var(--gold);
-  text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: background 0.2s, border-color 0.2s;
-  white-space: nowrap;
-}
-.store-nav-btn:hover {
-  background: oklch(78% 0.13 78 / 0.12);
-  border-color: var(--gold);
-}
-
-/* === NFC FOOTER === */
-.nfc-footer {
-  text-align: center;
-  padding: var(--space-2xl) 0 var(--space-xl);
-  margin-top: var(--space-xl);
-}
-
-.nfc-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  margin: 0 auto var(--space-md);
-  animation: nfc-breathe 2.5s ease-in-out infinite;
-}
-
-@keyframes nfc-breathe {
-  0%, 100% { opacity: 0.3; box-shadow: 0 0 4px oklch(78% 0.13 78 / 0.2); }
-  50%       { opacity: 1;   box-shadow: 0 0 14px oklch(78% 0.13 78 / 0.5), 0 0 28px oklch(78% 0.13 78 / 0.2); }
-}
-
-.nfc-label {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-}
-.nfc-sub {
-  font-size: 0.63rem;
-  color: oklch(40% 0.015 65);
-  margin-top: 0.3rem;
-  letter-spacing: 0.06em;
-}
-
-/* === RIPPLE === */
-.ripple { position: relative; overflow: hidden; }
-.ripple::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 0; height: 0;
-  border-radius: 50%;
-  background: oklch(78% 0.13 78 / 0.08);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-}
-.ripple:active::after {
-  width: 200px; height: 200px;
-  opacity: 0;
-  transition: width 0.4s, height 0.4s, opacity 0.4s;
-}
-
-/* === FADE-IN ANIMATIONS === */
-.fade-in {
-  opacity: 0;
-  transform: translateY(16px);
-  animation: fadeUp 0.5s ease forwards;
-}
-@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-.fade-in:nth-child(1) { animation-delay: 0.08s; }
-.fade-in:nth-child(2) { animation-delay: 0.18s; }
-.fade-in:nth-child(3) { animation-delay: 0.28s; }
-.fade-in:nth-child(4) { animation-delay: 0.38s; }
-.fade-in:nth-child(5) { animation-delay: 0.48s; }
-
-/* === CAROUSEL DOTS === */
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-xs);
-  padding: var(--space-xs) 0;
-}
-.carousel-dots .dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: all 0.3s;
-}
-.carousel-dots .dot.active {
-  background: var(--gold);
-  width: 16px;
-  border-radius: 3px;
-}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<!-- Legacy elements (hidden via CSS) -->
-<div class="hermes-bg"></div>
-<div class="hermes-texture"></div>
-<canvas id="fireCanvas"></canvas>
-<div class="marquee-bg"></div>
-
-<!-- Main Content -->
-<div class="main-content">
-
-  <!-- Hero -->
-  <section class="hero fade-in">
-    <div class="avatar-ring">
-      <img src="avatar.jpg" alt="陳韋甫｜小甫">
-    </div>
-    <h1 class="brand-name">陳韋甫｜小甫</h1>
-    <p class="subtitle-brand">珍北平豬肉餡餅</p>
-    <p class="subtitle">彰化35年老店二代｜全台500碗</p>
-    <span class="badge">🔥 二代傳承</span>
-  </section>
-
-  <!-- Social Links -->
-  <section class="fade-in">
-    <h2 class="section-title">聯絡方式</h2>
-    <div class="social-grid">
-      <a href="https://line.me/ti/p/cUcfq-gFSe" target="_blank" class="social-btn line full-width ripple">
-        <span class="icon">💬</span> Line 好友
+  <!-- ===== 第一螢：名片 ===== -->
+  <section class="card">
+    <div class="kicker"><span class="seal">珍</span> 珍北平 數位名片</div>
+    <div class="portrait"><img src="avatar.jpg" alt="陳韋甫｜小甫"></div>
+    <h1 class="name">陳韋甫</h1>
+    <div class="alias">小 甫</div>
+    <p class="role"><b>珍北平豬肉餡餅</b>　二代傳承<br>彰化 35 年 · 現煎現賣 · 全台 10 間</p>
+    <div class="rule"><i></i><div class="pie" id="pie"></div><i></i></div>
+    <div class="actions">
+      <a href="https://line.me/ti/p/cUcfq-gFSe" target="_blank" class="act line">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.69 2 10.23c0 4.07 3.56 7.48 8.37 8.12.33.07.78.22.89.5.1.26.07.66.03.92l-.14.86c-.04.26-.2 1.02.9.56 1.1-.46 5.9-3.48 8.05-5.95C21.6 13.6 22 11.97 22 10.23 22 5.69 17.52 2 12 2zM8.1 12.9H6.06c-.3 0-.54-.24-.54-.54V8.27c0-.3.24-.54.54-.54s.54.24.54.54v3.55H8.1c.3 0 .54.24.54.54s-.24.54-.54.54zm2.12-.54c0 .3-.24.54-.54.54s-.54-.24-.54-.54V8.27c0-.3.24-.54.54-.54s.54.24.54.54v4.09zm4.94 0c0 .23-.15.44-.37.51a.6.6 0 0 1-.17.03c-.17 0-.33-.08-.43-.22l-2.1-2.85v2.53c0 .3-.24.54-.54.54s-.54-.24-.54-.54V8.27c0-.23.15-.44.37-.51.06-.02.11-.03.17-.03.17 0 .33.08.43.22l2.1 2.86V8.27c0-.3.24-.54.54-.54s.54.24.54.54v4.09zm3.32-2.59c.3 0 .54.24.54.54s-.24.54-.54.54h-1.5v.97h1.5c.3 0 .54.24.54.54s-.24.54-.54.54h-2.04c-.3 0-.54-.24-.54-.54V8.27c0-.3.24-.54.54-.54h2.04c.3 0 .54.24.54.54s-.24.54-.54.54h-1.5v.97h1.5z"/></svg>
+        加 LINE 好友
       </a>
-      <a href="https://www.facebook.com/profile.php?id=100080960291132" target="_blank" class="social-btn ripple">
-        <span class="icon">📘</span> Facebook
-      </a>
-      <a href="https://www.instagram.com/usa123333/" target="_blank" class="social-btn ripple">
-        <span class="icon">📸</span> Instagram
-      </a>
-      <a href="mailto:weifu0716@gmail.com" class="social-btn ripple">
-        <span class="icon">✉️</span> Email
-      </a>
-      <a href="tel:0972612586" class="social-btn ripple">
-        <span class="icon">📞</span> 撥打電話
-      </a>
-      <a href="tel:0972612586" class="social-btn phone full-width ripple">
-        <span class="icon">📱</span> 0972-612-586
-      </a>
-    </div>
-  </section>
-
-  <!-- YouTube -->
-  <section class="fade-in">
-    <h2 class="section-title">影音介紹</h2>
-    <div class="yt-card">
-      <iframe src="https://www.youtube.com/embed/m5npZyOlI3g?start=426" allowfullscreen loading="lazy" title="珍北平豬肉餡餅 影音介紹 1"></iframe>
-    </div>
-    <div class="yt-card">
-      <iframe src="https://www.youtube.com/embed/Gc5glvsZXtQ" allowfullscreen loading="lazy" title="珍北平豬肉餡餅 影音介紹 2"></iframe>
-    </div>
-    <div class="yt-card">
-      <iframe src="https://www.youtube.com/embed/Mz-Xb4C96jc?start=496" allowfullscreen loading="lazy" title="珍北平豬肉餡餅 影音介紹 3"></iframe>
-    </div>
-    <div class="yt-card">
-      <iframe src="https://www.youtube.com/embed/NM77iLfpIVk" allowfullscreen loading="lazy" title="珍北平豬肉餡餅 影音介紹 4"></iframe>
-    </div>
-  </section>
-
-  <!-- Media -->
-  <section class="fade-in">
-    <h2 class="section-title">媒體採訪</h2>
-    <a href="https://travel.udn.com/travel/story/7207/8212228" target="_blank" class="media-card ripple">
-      <span class="media-icon">📰</span>
-      <div class="media-info">
-        <div class="media-title">30元豬肉餡餅買十送一！彰化超人氣銅板美食</div>
-        <div class="media-source">聯合新聞網</div>
+      <div class="act-row">
+        <a href="tel:0972612586" class="act call">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 3.5h3l1.5 5-2 1.2a13 13 0 0 0 6.8 6.8l1.2-2 5 1.5v3a2 2 0 0 1-2.1 2A17 17 0 0 1 3 5.6 2 2 0 0 1 5 3.5z"/></svg>
+          撥電話
+        </a>
+        <a href="https://www.google.com/maps/search/?api=1&query=珍北平豬肉餡餅" target="_blank" class="act map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          找最近的店
+        </a>
       </div>
-      <span class="media-arrow">›</span>
+    </div>
+    <div class="more"><span>往下看故事</span><div class="arr"></div></div>
+  </section>
+
+  <!-- ===== 大數字 ===== -->
+  <section class="numblock">
+    <div class="row">
+      <div class="stat"><span class="big">35</span><span class="lb">年老店</span></div>
+      <div class="stat"><span class="big">10</span><span class="lb">間分店</span></div>
+    </div>
+    <div class="award">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5 7 21l5-2.6L17 21l-1.5-7.5"/></svg>
+      入選《台灣 500 碗》小吃名店
+    </div>
+    <div class="cap">彰化起家 · 二代傳承 · 銅板美食</div>
+  </section>
+
+  <!-- ===== 全幅特寫 ===== -->
+  <section class="feature">
+    <img src="xianbing-closeup.jpg" alt="現煎豬肉餡餅">
+    <div class="grad"></div>
+    <div class="txt">
+      <div class="et">Signature</div>
+      <div class="ti">現煎現賣<br>爆漿豬肉餡餅</div>
+      <div class="sb">35 年不變的配方 · 一口咬下滿滿肉汁</div>
+    </div>
+  </section>
+
+  <!-- ===== 招牌菜單 ===== -->
+  <section class="sect">
+    <h2 class="sect-h rv"><span class="zh">招牌菜單</span><span class="en">Menu</span></h2>
+    <p class="sect-sub rv">六款人氣 · 現點現煎</p>
+    <div class="menu">
+      <div class="mi feat rv"><img src="menu-01-pork.jpg" alt="招牌豬肉餡餅" loading="lazy"><div class="lb">招牌豬肉餡餅</div></div>
+      <div class="mi rv dl1"><img src="menu-02-kimchi.jpg" alt="泡菜餡餅" loading="lazy"><div class="lb">泡菜餡餅</div></div>
+      <div class="mi rv dl1"><img src="menu-06-chive.jpg" alt="韭菜餡餅" loading="lazy"><div class="lb">韭菜餡餅</div></div>
+      <div class="mi rv dl2"><img src="menu-03-flatbread.jpg" alt="奶油餡餅" loading="lazy"><div class="lb">奶油餡餅</div></div>
+      <div class="mi rv dl2"><img src="menu-04-butter.jpg" alt="山東大餅" loading="lazy" style="object-position:center 18%"><div class="lb">山東大餅</div></div>
+      <div class="mi rv dl3"><img src="menu-05-sesame.jpg" alt="芝麻餡餅" loading="lazy"><div class="lb">芝麻餡餅</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 媒體報導 ===== -->
+  <section class="sect">
+    <h2 class="sect-h rv"><span class="zh">媒體報導</span><span class="en">Press</span></h2>
+    <p class="sect-sub rv">在地人激推 · 媒體採訪</p>
+    <a href="https://travel.udn.com/travel/story/7207/8212228" target="_blank" class="media rv dl1">
+      <span class="ix">01</span>
+      <div class="info"><div class="t">30元豬肉餡餅買十送一！彰化超人氣銅板美食</div><div class="s">聯合新聞網</div></div>
+      <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
     </a>
-    <a href="https://sillycoupleblog.tw/changhua-city-food-zhenbeipingxianbing-2512/" target="_blank" class="media-card ripple">
-      <span class="media-icon">✍️</span>
-      <div class="media-info">
-        <div class="media-title">在地人激推！號稱南郭路最強餡餅老店</div>
-        <div class="media-source">傻蛋夫妻生活札記</div>
-      </div>
-      <span class="media-arrow">›</span>
+    <a href="https://sillycoupleblog.tw/changhua-city-food-zhenbeipingxianbing-2512/" target="_blank" class="media rv dl2">
+      <span class="ix">02</span>
+      <div class="info"><div class="t">在地人激推！號稱南郭路最強餡餅老店</div><div class="s">傻蛋夫妻生活札記</div></div>
+      <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
     </a>
-    <a href="https://babyayumi1127.pixnet.net/blog/posts/9298432955" target="_blank" class="media-card ripple">
-      <span class="media-icon">📺</span>
-      <div class="media-info">
-        <div class="media-title">私心推薦 好吃到會流淚的珍北平豬肉餡餅</div>
-        <div class="media-source">婕小妞的愛吃愛玩遊樂園</div>
-      </div>
-      <span class="media-arrow">›</span>
+    <a href="https://babyayumi1127.pixnet.net/blog/posts/9298432955" target="_blank" class="media rv dl3">
+      <span class="ix">03</span>
+      <div class="info"><div class="t">私心推薦 好吃到會流淚的珍北平豬肉餡餅</div><div class="s">婕小妞的愛吃愛玩遊樂園</div></div>
+      <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></span>
     </a>
   </section>
 
-  <!-- Menu Carousel -->
-  <section class="fade-in">
-    <h2 class="section-title">招牌菜單</h2>
-    <div class="menu-carousel" id="menuCarousel">
-      <div class="menu-item">
-        <img src="menu-01-pork.jpg" alt="招牌豬肉餡餅" loading="lazy">
-        <div class="menu-label">🥟 招牌豬肉餡餅</div>
-      </div>
-      <div class="menu-item">
-        <img src="menu-02-kimchi.jpg" alt="泡菜餡餅" loading="lazy">
-        <div class="menu-label">🌶️ 泡菜餡餅</div>
-      </div>
-      <div class="menu-item">
-        <img src="menu-03-flatbread.jpg" alt="山東大餅" loading="lazy">
-        <div class="menu-label">🫓 山東大餅</div>
-      </div>
-      <div class="menu-item">
-        <img src="menu-04-butter.jpg" alt="奶油餡餅" loading="lazy">
-        <div class="menu-label">🧈 奶油餡餅</div>
-      </div>
-      <div class="menu-item">
-        <img src="menu-05-sesame.jpg" alt="芝麻餡餅" loading="lazy">
-        <div class="menu-label">🌰 芝麻餡餅</div>
-      </div>
-      <div class="menu-item">
-        <img src="menu-06-chive.jpg" alt="韭菜餡餅" loading="lazy">
-        <div class="menu-label">🥬 韭菜餡餅</div>
-      </div>
-    </div>
-    <div class="carousel-dots" id="carouselDots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+  <!-- ===== 影音 ===== -->
+  <section class="sect">
+    <h2 class="sect-h rv"><span class="zh">影音介紹</span><span class="en">Video</span></h2>
+    <p class="sect-sub rv">電視 · 網路媒體報導</p>
+    <div class="yt rv dl1"><iframe src="https://www.youtube.com/embed/m5npZyOlI3g?start=426" allowfullscreen loading="lazy" title="珍北平 影音 1"></iframe></div>
+    <div class="yt rv dl2"><iframe src="https://www.youtube.com/embed/Gc5glvsZXtQ" allowfullscreen loading="lazy" title="珍北平 影音 2"></iframe></div>
+    <div class="yt rv dl3"><iframe src="https://www.youtube.com/embed/Mz-Xb4C96jc?start=496" allowfullscreen loading="lazy" title="珍北平 影音 3"></iframe></div>
+    <div class="yt rv dl3"><iframe src="https://www.youtube.com/embed/NM77iLfpIVk" allowfullscreen loading="lazy" title="珍北平 影音 4"></iframe></div>
+  </section>
+
+  <!-- ===== 分店 ===== -->
+  <section class="sect">
+    <h2 class="sect-h rv"><span class="zh">全台分店</span><span class="en">Stores</span></h2>
+    <p class="sect-sub rv">彰化 · 台中 共 10 間</p>
+    <div class="stores">
+      <div class="store rv dl1"><div class="l"><span class="n">1</span><span class="nm">南郭店</span></div><a href="https://maps.app.goo.gl/6UAwd42oAwDJgNHd9" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl1"><div class="l"><span class="n">2</span><span class="nm">永安店</span></div><a href="https://maps.app.goo.gl/Cz6oeHWdNR8LeRzY9" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl2"><div class="l"><span class="n">3</span><span class="nm">彰南店</span></div><a href="https://maps.app.goo.gl/jLfwgcskYi3tFZoK7" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl2"><div class="l"><span class="n">4</span><span class="nm">秀水店</span></div><a href="https://maps.app.goo.gl/ivtmikg5dQWDbh3FA" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl3"><div class="l"><span class="n">5</span><span class="nm">和美店</span></div><a href="https://maps.app.goo.gl/KsDLzDk1mvk1Vj5V9" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl3"><div class="l"><span class="n">6</span><span class="nm">頂番店</span></div><a href="https://maps.app.goo.gl/NNCLH4j74rMmkSmZ8" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl1"><div class="l"><span class="n">7</span><span class="nm">鹿港店</span></div><a href="https://maps.app.goo.gl/C9ueRDxpn1w8E57v9" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl2"><div class="l"><span class="n">8</span><span class="nm">花壇店</span></div><a href="https://maps.app.goo.gl/VCVSyqbhnV5uwfrg9" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl3"><div class="l"><span class="n">9</span><span class="nm">內新店</span></div><a href="https://maps.app.goo.gl/NSqsYezdX5FKpKUo8" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
+      <div class="store rv dl3"><div class="l"><span class="n">10</span><span class="nm">大埔店</span></div><a href="https://www.google.com/maps/search/?api=1&query=珍北平豬肉餡餅+大埔店" target="_blank" class="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>導航</a></div>
     </div>
   </section>
 
-  <!-- Store Locations -->
-  <section class="fade-in">
-    <h2 class="section-title">全台分店據點</h2>
-    <div class="store-list">
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">1</span>
-          <span class="store-list-name">南郭店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/6UAwd42oAwDJgNHd9" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">2</span>
-          <span class="store-list-name">永安店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/Cz6oeHWdNR8LeRzY9" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">3</span>
-          <span class="store-list-name">彰南店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/jLfwgcskYi3tFZoK7" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">4</span>
-          <span class="store-list-name">秀水店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/ivtmikg5dQWDbh3FA" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">5</span>
-          <span class="store-list-name">和美店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/KsDLzDk1mvk1Vj5V9" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">6</span>
-          <span class="store-list-name">頂番店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/NNCLH4j74rMmkSmZ8" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">7</span>
-          <span class="store-list-name">鹿港店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/C9ueRDxpn1w8E57v9" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">8</span>
-          <span class="store-list-name">花壇店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/VCVSyqbhnV5uwfrg9" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
-      <div class="store-list-item">
-        <div class="store-list-left">
-          <span class="store-num">9</span>
-          <span class="store-list-name">內新店</span>
-        </div>
-        <a href="https://maps.app.goo.gl/NSqsYezdX5FKpKUo8" target="_blank" class="store-nav-btn">📍 導航</a>
-      </div>
+  <!-- ===== 頁尾 ===== -->
+  <footer class="foot rv">
+    <div class="socials">
+      <a href="https://www.facebook.com/profile.php?id=100080960291132" target="_blank" class="soc" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.33-.04-1.57-.14-2.88-.14C11.9 2 10 3.66 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/usa123333/" target="_blank" class="soc" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="mailto:weifu0716@gmail.com" class="soc" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>
+      </a>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="nfc-footer">
-    <div class="nfc-dot"></div>
-    <div class="nfc-label">NFC Digital Card</div>
-    <div class="nfc-sub">珍北平豬肉餡餅｜tap to connect</div>
+    <div class="seal">珍</div>
+    <div class="lab">珍北平豬肉餡餅</div>
+    <div class="sub">NFC 數位名片 · tap to connect</div>
   </footer>
 
 </div>
-
 <script>
-// === GOLD EMBER PARTICLES ===
-const canvas = document.getElementById('fireCanvas');
-const ctx = canvas.getContext('2d');
-let W, H;
-const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-function resize() {
-  W = window.innerWidth;
-  H = window.innerHeight;
-  canvas.width  = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.width  = W + 'px';
-  canvas.style.height = H + 'px';
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-resize();
-window.addEventListener('resize', resize);
-
-class Ember {
-  constructor(randomY) { this.reset(randomY); }
-  reset(randomY) {
-    this.x          = Math.random() * W;
-    this.y          = randomY ? Math.random() * H : H + 10;
-    this.size       = 0.8 + Math.random() * 1.6;
-    this.vy         = 0.25 + Math.random() * 0.55;
-    this.vx         = (Math.random() - 0.5) * 0.3;
-    this.opacity    = 0;
-    this.maxOpacity = 0.15 + Math.random() * 0.28;
-    this.life       = 0;
-    this.maxLife    = 260 + Math.random() * 260;
-    this.isGold     = Math.random() < 0.7;
-  }
-  update() {
-    this.life++;
-    this.y  -= this.vy;
-    this.x  += this.vx;
-    this.vx += (Math.random() - 0.5) * 0.012;
-    this.vx  = Math.max(-0.5, Math.min(0.5, this.vx));
-
-    const fadeInEnd    = this.maxLife * 0.15;
-    const fadeOutStart = this.maxLife * 0.75;
-    if (this.life < fadeInEnd) {
-      this.opacity = this.maxOpacity * (this.life / fadeInEnd);
-    } else if (this.life > fadeOutStart) {
-      this.opacity = this.maxOpacity * (1 - (this.life - fadeOutStart) / (this.maxLife - fadeOutStart));
-    } else {
-      this.opacity = this.maxOpacity;
-    }
-
-    if (this.y < -10 || this.life >= this.maxLife) this.reset(false);
-  }
-  draw() {
-    if (this.opacity <= 0.01) return;
-    ctx.save();
-    ctx.globalAlpha = this.opacity;
-    ctx.fillStyle   = this.isGold ? '#D4AF37' : '#B8860B';
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = this.opacity * 0.2;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-  }
-}
-
-const embers = Array.from({ length: 30 }, () => new Ember(true));
-
-function animate() {
-  ctx.clearRect(0, 0, W, H);
-  embers.forEach(e => { e.update(); e.draw(); });
-  requestAnimationFrame(animate);
-}
-animate();
-
-// === CAROUSEL DOTS ===
-const carousel = document.getElementById('menuCarousel');
-const dots = document.querySelectorAll('#carouselDots .dot');
-if (carousel && dots.length) {
-  carousel.addEventListener('scroll', () => {
-    const itemWidth = carousel.children[0].offsetWidth + 8;
-    const index = Math.round(carousel.scrollLeft / itemWidth);
-    dots.forEach((d, i) => d.classList.toggle('active', i === index));
-  });
-}
+fetch('xianbing.json').then(r=>r.json()).then(d=>{
+  lottie.loadAnimation({container:document.getElementById('pie'),renderer:'svg',loop:true,autoplay:true,animationData:d});
+}).catch(()=>{});
+const io=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
